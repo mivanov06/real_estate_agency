@@ -3,6 +3,10 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+
+
 class Flat(models.Model):
     owner = models.CharField('ФИО владельца', max_length=200)
     owners_phonenumber = models.CharField('Номер владельца', max_length=20)
@@ -54,6 +58,8 @@ class Flat(models.Model):
         null=True,
         db_index=True)
 
+    liked_by = models.ManyToManyField(User, blank=True, related_name="liked_flats", verbose_name='Лайки:')
+
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
 
@@ -65,4 +71,3 @@ class Complaint(models.Model):
 
     def __str__(self):
         return f'{self.user.username} - {self.flat.address}'
-
