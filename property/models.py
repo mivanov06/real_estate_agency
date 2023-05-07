@@ -92,7 +92,6 @@ class Owner(models.Model):
     def __str__(self):
         return f'{self.name} - {self.pure_phone}'
 
-
     class Meta:
         verbose_name = 'Владелец'
         verbose_name_plural = 'Владельцы'
