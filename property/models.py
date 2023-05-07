@@ -65,6 +65,10 @@ class Flat(models.Model):
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
 
+    class Meta:
+        verbose_name = 'Квартира'
+        verbose_name_plural = 'Квартиры'
+
 
 class Complaint(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name='Пользователь')
@@ -73,3 +77,22 @@ class Complaint(models.Model):
 
     def __str__(self):
         return f'{self.user.username} - {self.flat.address}'
+
+    class Meta:
+        verbose_name = 'Жалобы'
+        verbose_name_plural = 'Жалобы'
+
+
+class Owner(models.Model):
+    name = models.CharField('ФИО владельца', max_length=200, db_index=True)
+    phonenumber = models.CharField('Номер владельца', max_length=20, db_index=True)
+    pure_phone = PhoneNumberField('Нормализованный номер владельца', blank=True, null=True, db_index=True)
+    flats = models.ManyToManyField(Flat, blank=True, related_name="owners", verbose_name='Квартиры', db_index=True)
+
+    def __str__(self):
+        return f'{self.name} - {self.pure_phone}'
+
+
+    class Meta:
+        verbose_name = 'Владелец'
+        verbose_name_plural = 'Владельцы'
