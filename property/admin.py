@@ -3,9 +3,14 @@ from django.contrib import admin
 from .models import Flat, Complaint, Owner
 
 
-class ModelInInline(admin.TabularInline):
+class FlatsInline(admin.TabularInline):
     model = Owner.flats.through
     raw_id_fields = ('owner', 'flat')
+
+
+class LikeInInLine(admin.TabularInline):
+    model = Flat.liked_by.through
+    raw_id_fields = ('user',)
 
 
 class AdminFlat(admin.ModelAdmin):
@@ -16,14 +21,17 @@ class AdminFlat(admin.ModelAdmin):
     list_filter = ['new_building']
     raw_id_fields = ['liked_by']
     inlines = [
-        ModelInInline,
+        FlatsInline, LikeInInLine
     ]
     fieldsets = (
         ('Адрес', {
             'fields': ('town', 'town_district', 'address', 'floor')
         }),
         ('Информация о квартире', {
-            'fields': ('rooms_number', 'living_area', 'has_balcony', 'construction_year', 'new_building')
+            'fields': ('description', 'rooms_number', 'living_area', 'has_balcony', 'construction_year', 'new_building')
+        }),
+        ('Информация об объявлении', {
+            'fields': ('created_at', 'active')
         })
     )
 

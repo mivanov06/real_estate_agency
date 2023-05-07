@@ -4,16 +4,11 @@ from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
 
-class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-
-
 class Flat(models.Model):
     created_at = models.DateTimeField(
         'Когда создано объявление',
         default=timezone.now,
         db_index=True)
-
     description = models.TextField('Текст объявления', blank=True)
     price = models.IntegerField('Цена квартиры', db_index=True)
 
