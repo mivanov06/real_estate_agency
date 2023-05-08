@@ -29,9 +29,6 @@ class AdminFlat(admin.ModelAdmin):
         }),
         ('Информация о квартире', {
             'fields': ('description', 'rooms_number', 'living_area', 'has_balcony', 'construction_year', 'new_building')
-        }),
-        ('Информация об объявлении', {
-            'fields': ('created_at', 'active')
         })
     )
 
